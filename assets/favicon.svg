@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 0 60 60" width="60" height="60">
+  <title>PineSucceed</title>
+  <g fill="#003466">
+    <path d="M0 4 L14 15.5 V60 L0 49 Z" />
+    <path d="M22 18 L49 0.5 V18.5 L22 36 Z" />
+    <path d="M18 41.2 L46.3 23.8 V42 L18 59.8 Z" />
+  </g>
+</svg>
