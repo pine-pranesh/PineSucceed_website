@@ -5,6 +5,7 @@
      vendor      Bootstrap 5.0.1 and Font Awesome Free 6.5.0
      base        element defaults the design is built on
      components  page and component styles
+     responsive  fluid type scale and small-screen fixes (last, so it wins)
    Unlayered rules (fonts, phone input, body, headings, scrollbar) and the
    Swiper 4.2.0 stylesheet on the About page take priority over the layers.
 
@@ -12,7 +13,7 @@
    exactly; the component rules below cover everything else.
    ========================================================================== */
 
-@layer vendor, base, components;
+@layer vendor, base, components, responsive;
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css") layer(vendor);
 @import url("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css") layer(vendor);
@@ -728,6 +729,7 @@ html::-webkit-scrollbar-thumb:hover,
 }
 .ai-lifecycle-tabs--scroll::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 .ai-lifecycle-tabs--scroll::-webkit-scrollbar-thumb {
   border: 0;
@@ -10265,7 +10267,7 @@ background-color: #f5f4f0;
 
   /* Heading block above the image, text and buttons below it. */
   .ai-hero-copy {
-    max-width: 900px;
+    max-width: 1050px;
     padding-top: 1.75rem;
   }
   .ai-hero-head {
@@ -10289,6 +10291,7 @@ background-color: #f5f4f0;
     line-height: 1.2;
     letter-spacing: -0.015em;
     color: var(--ink-strong);
+        margin-top: 12px;
   }
 
   .ai-hero-text {
@@ -10437,6 +10440,38 @@ background-color: #f5f4f0;
     outline-offset: -2px;
   }
 
+  /* Mobile and tablet: the nav takes the full card width and the scrolling
+     tab list becomes one horizontally scrolling row above the panel */
+  @media (max-width: 1199.98px) {
+    .ai-lifecycle-card > .ai-lifecycle-nav,
+    .ai-lifecycle-card > .ai-lifecycle-panel {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+    .ai-lifecycle-card > .ai-lifecycle-nav {
+      padding-bottom: 1.25rem;
+    }
+    .ai-lifecycle-tabs--scroll {
+      flex-direction: row;
+      gap: 0.5rem;
+      max-height: none;
+      padding: 2px 2px 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+    }
+    .ai-lifecycle-tabs--scroll > .ai-lifecycle-tab {
+      padding: 0.65rem 1.1rem;
+      border: 1px solid #e2ded4;
+      border-radius: 6px;
+      white-space: nowrap;
+      scroll-snap-align: start;
+    }
+    .ai-lifecycle-tabs--scroll > .ai-lifecycle-tab[aria-selected="true"] {
+      border-color: transparent;
+    }
+  }
   .ai-lifecycle-panel {
     padding: 2rem 1.25rem 2.25rem;
   }
@@ -11945,5 +11980,124 @@ background-color: #f5f4f0;
     .section-label {
       font-size: 16px;
     }
+  }
+}
+
+/* ==========================================================================
+   Responsive typography & overflow fixes (every page)
+   One fluid type scale replaces the fixed and oversized heading sizes, so
+   text grows smoothly from 320px phones to 1920px+ screens without getting
+   too large. This layer comes last, so it wins over the component rules
+   (and their breakpoint overrides) without needing extra specificity.
+   ========================================================================== */
+
+:root {
+  /* Values at 320px / 768px / 1280px / 1440px / 1920px in comments. */
+  --fs-display: clamp(2rem, 1.4rem + 2.4vw, 3.75rem);   /* 32 / 41 / 53 / 57 / 60 */
+  --fs-h2: clamp(1.75rem, 1.325rem + 2.125vw, 3.875rem); /* 28 / 38 / 48 / 52 / 62 */
+  --fs-stat: clamp(2rem, 1.4rem + 1.9vw, 3.25rem);      /* 32 / 37 / 47 / 50 / 52 */
+  --fs-h3: clamp(1.5rem, 1.15rem + 1vw, 2.25rem);       /* 24 / 26 / 31 / 33 / 36 */
+  --fs-h4: clamp(1.375rem, 1.15rem + 0.55vw, 1.75rem);  /* 22 / 23 / 25 / 26 / 28 */
+  --fs-h5: clamp(1.25rem, 1.1rem + 0.35vw, 1.5rem);     /* 20 / 20 / 22 / 23 / 24 */
+  --fs-lead-lg: clamp(1.125rem, 1rem + 0.45vw, 1.375rem); /* 18 / 19 / 22 / 22 / 22 */
+  --fs-lead: clamp(1rem, 0.93rem + 0.35vw, 1.25rem);    /* 16 / 18 / 19 / 20 / 20 */
+}
+
+@layer responsive {
+  /* Page heroes (h1) */
+  .home-hero-title,
+  .about-hero-title,
+  .contact-hero-title,
+  .office-hero-title,
+  .industry-title {
+    font-size: var(--fs-display);
+  }
+
+  /* Section headings, including the AI-page h1 and CTA titles */
+  .section-title,
+  .ai-cta .ai-cta-title,
+  .contact-closing-title,
+  .home-tech-partner-execution-text-2 {
+    font-size: var(--fs-h2);
+  }
+
+  /* Big stat numbers and value-card words */
+  .about-who-are-title-2,
+  .about-values-that-title-2 {
+    font-size: var(--fs-stat);
+  }
+
+  /* Large card and panel titles */
+  .industry-title-7,
+  .industry-title-3,
+  .ai-lifecycle-panel-title,
+  .ai-outcome-title,
+  .home-core-capabilities-title,
+  .industry-expertise-title-2,
+  .contact-aside-title,
+  .home-industries-card-title,
+  .home-contact-title-2 {
+    font-size: var(--fs-h3);
+  }
+
+  /* Medium card titles */
+  .ai-process-title,
+  .industry-expertise-title-3,
+  .industry-expertise-title-4,
+  .industry-expertise-title-5,
+  .about-mission-vision-title-3,
+  .ai-hero-subtitle,
+  .industry-label,
+  .home-tech-partner-execution-title-2,
+  .home-tech-partner-execution-title-3,
+  .office-get-touch-title-2,
+  .about-capabilities-that-title-2,
+  .about-values-that-title-4,
+  .ai-lifecycle-nav-title,
+  .ai-benefit-title,
+  .retail-question-text {
+    font-size: var(--fs-h4);
+  }
+
+  /* Small card titles */
+  .approach-card-title,
+  .home-challenge-title,
+  .home-tech-partner-title-2,
+  .ai-goal-title,
+  .ai-tech-title,
+  .ai-why-label,
+  .industry-title-8 {
+    font-size: var(--fs-h5);
+  }
+
+  /* Intro / lead paragraphs */
+  .about-mission-vision-text,
+  .about-mission-vision-text-3 {
+    font-size: var(--fs-lead-lg);
+  }
+  .ai-why-lead,
+  .approach-lead,
+  .contact-hero-lead,
+  .home-core-capabilities-text-4,
+  .home-challenges-lead,
+  .home-contact-text-2 {
+    font-size: var(--fs-lead);
+  }
+
+  /* Long words and URLs never push the page wider than the screen. */
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
+    overflow-wrap: break-word;
+  }
+
+  /* .g-5 rows pull out 1.5rem on each side, more than the 1.25rem phone
+     gutter, which made phones scroll sideways by 4px. Cap the gutter at
+     the page gutter so the row always fits inside .container. */
+  .row.g-5,
+  .row.gx-5 {
+    --bs-gutter-x: min(3rem, calc(2 * var(--page-gutter)));
   }
 }

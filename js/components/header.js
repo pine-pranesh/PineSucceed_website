@@ -30,10 +30,10 @@
       title: "Application Development",
       items: [
         { title: "CMS Based Web Development", description: "Flexible, secure websites your team can manage with ease.", href: "/cms-based-web-development-service" },
-        { title: "Cross Platform App Development", description: "loremaskdhja sdkajshd kjhdas kjdha", href: "/cross-platform-app-development" },
+        { title: "Cross Platform App Development", description: "Consistent apps across mobile, web, and desktop from shared code.", href: "/cross-platform-app-development" },
         { title: "Mobile App Development", description: "Native iOS/Android and cross-platform Flutter/React Native solutions.", href: "/mobile-app-development-company" },
-        { title: "PWA Development", description: "loremaskdhja sdkajshd kjhdas kjdha", href: "/pwa-development-services" },
-        { title: "Web Development", description: "loremaskdhja sdkajshd kjhdas kjdha", href: "/web-design-and-development-solutions" }
+        { title: "PWA Development", description: "Deliver fast, installable, and app-like web experiences.", href: "/pwa-development-services" },
+        { title: "Web Development", description: "Build secure, scalable, and high-performance web solutions.", href: "/web-design-and-development-solutions" }
       ]
     },
     {
@@ -146,6 +146,14 @@
     "/database-creation-and-management-services": "database-creation-and-management-services.html",
     "/hire-ai-engineers": "hire-ai-engineers.html",
     "/cms-based-web-development-service": "cms-based-web-development-services.html",
+    "/cross-platform-app-development": "cross-platform-app-development-services.html",
+    "/mobile-app-development-company": "mobile-app-development-services.html",
+    "/pwa-development-services": "pwa-development-services.html",
+    "/web-design-and-development-solutions": "web-development-services.html",
+    "/aws-consulting-services": "aws-consulting-services.html",
+    "/cloud-development-services": "cloud-development-services.html",
+    "/cloud-migration-services": "cloud-migration-services.html",
+    "/azure-managed-services": "azure-managed-services.html",
     "/accelerate-software-delivery-with-AI-Assisted-engineering": "ai-across-sdlc-services.html"
   };
 
@@ -170,7 +178,15 @@
     "data-science": "/data-science-development-services",
     database: "/database-creation-and-management-services",
     "hire-ai": "/hire-ai-engineers",
-    cms: "/cms-based-web-development-service"
+    cms: "/cms-based-web-development-service",
+    "cross-platform": "/cross-platform-app-development",
+    "mobile-app": "/mobile-app-development-company",
+    pwa: "/pwa-development-services",
+    "web-development": "/web-design-and-development-solutions",
+    aws: "/aws-consulting-services",
+    "cloud-development": "/cloud-development-services",
+    "cloud-migration": "/cloud-migration-services",
+    "azure-managed": "/azure-managed-services"
   };
 
   var pathname = PAGE_TO_ROUTE[document.body.getAttribute("data-page")] || "";

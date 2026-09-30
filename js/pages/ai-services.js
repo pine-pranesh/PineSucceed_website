@@ -179,11 +179,25 @@
 
     // Scrolling tab list: show exactly VISIBLE_TABS tabs (tabs can wrap to two
     // lines, so the height is measured instead of fixed in CSS). The card,
-    // and so the panel and image beside it, follow this height.
+    // and so the panel and image beside it, follow this height. Laptop
+    // screens (1200px-1440px wide) use a fixed LAPTOP_TABS_HEIGHT instead,
+    // so every page's card is the same height as the panel content, whether
+    // its tab names fit on one line or wrap to two. Below 1200px the list is
+    // one horizontally scrolling row (CSS), so no height is set.
     var VISIBLE_TABS = 9;
+    var HORIZONTAL_MAX_WIDTH = 1199;
+    var LAPTOP_TABS_HEIGHT = 480;
+    var LAPTOP_MIN_WIDTH = 1200;
+    var LAPTOP_MAX_WIDTH = 1440;
     function fitTabs() {
       if (!tablist.classList.contains("ai-lifecycle-tabs--scroll")) return;
       tablist.style.maxHeight = "";
+      var width = window.innerWidth;
+      if (width <= HORIZONTAL_MAX_WIDTH) return;
+      if (width >= LAPTOP_MIN_WIDTH && width <= LAPTOP_MAX_WIDTH) {
+        tablist.style.maxHeight = LAPTOP_TABS_HEIGHT + "px";
+        return;
+      }
       if (tabs.length <= VISIBLE_TABS) return;
       var last = tabs[VISIBLE_TABS - 1];
       var style = getComputedStyle(tablist);
@@ -201,7 +215,22 @@
         tab.setAttribute("aria-selected", on ? "true" : "false");
         tab.tabIndex = on ? 0 : -1;
       });
-      if (focus) tabs[index].focus();
+      if (focus) tabs[index].focus({ preventScroll: true });
+
+      // Horizontal tab row: scroll the selected tab fully into view.
+      if (window.innerWidth <= HORIZONTAL_MAX_WIDTH) {
+        var tab = tabs[index];
+        var left = tab.getBoundingClientRect().left -
+          tablist.getBoundingClientRect().left + tablist.scrollLeft;
+        if (left < tablist.scrollLeft) {
+          tablist.scrollTo({ left: left, behavior: "smooth" });
+        } else if (left + tab.offsetWidth > tablist.scrollLeft + tablist.clientWidth) {
+          tablist.scrollTo({
+            left: left + tab.offsetWidth - tablist.clientWidth,
+            behavior: "smooth",
+          });
+        }
+      }
 
       stepNo.textContent = String(index + 1).padStart(2, "0");
       stepName.textContent = stage.step;
