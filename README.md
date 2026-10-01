@@ -29,36 +29,44 @@ Links to pages that are not part of this folder (for example `/devops-services`)
 
 | Library | Version | Loaded from |
 |---|---|---|
-| Bootstrap (CSS) | 5.0.1 | `@import` at the top of `css/site.css` (jsDelivr) |
-| Font Awesome Free | 6.5.0 | `@import` at the top of `css/site.css` (jsDelivr) |
+| Bootstrap (CSS) | 5.0.1 | `@import` at the top of `assets/css/site.css` (jsDelivr) |
+| Font Awesome Free | 6.5.0 | `@import` at the top of `assets/css/site.css` (jsDelivr) |
 | Swiper | 4.2.0 | `<link>` and `<script>` in `about-us.html` (jsDelivr) |
 
-Bootstrap's JavaScript is not loaded because no page uses a Bootstrap JS component. Menus, modals, tabs, the FAQ accordion and the carousels are handled by the scripts in `js/`.
+Bootstrap's JavaScript is not loaded because no page uses a Bootstrap JS component. Menus, modals, tabs, the FAQ accordion and the carousels are handled by the scripts in `assets/js/`.
 
 ## Folder structure
 
 ```
-├── *.html                 pages
-├── css/site.css           all site styles (see "How the CSS is organised")
-├── js/
-│   ├── components/        shared by several pages
-│   │   ├── header.js         header: mega menus, mobile menu, scroll shadow, transparent header on About
-│   │   ├── modals.js         "Get Free Consultation" / "Request a Proposal" buttons and both modals
-│   │   ├── smooth-scroll.js  smooth page scrolling (Lenis 1.1.20 from jsDelivr)
-│   │   ├── phone-field.js    international phone input
-│   │   └── industry-page.js  industry pages: services tabs, solutions carousel, FAQ accordion
-│   └── pages/             one script per page
-│       ├── home.js           capability tabs, Industries slider, contact form
-│       ├── about.js          competencies slider (Swiper 4.2.0)
-│       ├── contact.js        contact page form
-│       ├── retail.js         Retail & eCommerce content for industry-page.js
-│       ├── healthcare.js     Healthcare content for industry-page.js
-│       ├── manufacturing.js  Manufacturing & Industrial content for industry-page.js
-│       ├── bfsi.js           BFSI content for industry-page.js
-│       ├── mining.js         Mining content for industry-page.js
-│       └── legal.js          Legal content for industry-page.js
-└── assets/                images, videos, icons and fonts
+├── *.html                 home, about, contact and office pages
+├── industries/            one page per industry
+├── services/<category>/   service pages grouped by menu category
+│                          (ai-data, application-development, cloud,
+│                          digital-transformation, software-engineering, staff-augmentation)
+└── assets/
+    ├── css/site.css       all site styles (see "How the CSS is organised")
+    ├── js/
+    │   ├── components/    shared by several pages
+    │   │   ├── header.js         header: mega menus, mobile menu, scroll shadow, transparent header on About
+    │   │   ├── modals.js         "Get Free Consultation" / "Request a Proposal" buttons and both modals
+    │   │   ├── smooth-scroll.js  smooth page scrolling (Lenis 1.1.20 from jsDelivr)
+    │   │   ├── phone-field.js    international phone input
+    │   │   └── industry-page.js  industry pages: services tabs, solutions carousel, FAQ accordion
+    │   └── pages/         one script per page
+    │       ├── home.js           capability tabs, Industries slider, contact form
+    │       ├── about.js          competencies slider (Swiper 4.2.0)
+    │       ├── contact.js        contact page form
+    │       ├── retail.js, healthcare.js, ...  industry content for industry-page.js
+    │       ├── ai-services.js    "Explore our services" tabs on service pages
+    │       └── *-data.js         tab content for one service page each
+    ├── img/
+    │   ├── industries/<page>/              images for one industry page
+    │   ├── services/<category>/<page>/     images for one service page
+    │   └── ...                             home, about, header, footer and shared images
+    └── fonts/
 ```
+
+Pages in `industries/` and `services/<category>/` reach shared files with `../` and `../../`. Scripts that build URLs at run time (`header.js`, `modals.js`, `industry-page.js`, `ai-services.js`) work out the site root from their own `<script src>`, so they work from any folder depth.
 
 Each page loads `components/phone-field.js`, `components/header.js`, `components/modals.js` and its own page script, all with `defer`. The Retail and Healthcare pages also load `components/industry-page.js`, which holds the behaviour both pages share; their page scripts only pass in the content.
 
@@ -66,7 +74,7 @@ No inline `style` attributes are used. Images that fill their container use the 
 
 ## How the CSS is organised
 
-`css/site.css` uses cascade layers so that Bootstrap's Reboot never overrides the site's own styles:
+`assets/css/site.css` uses cascade layers so that Bootstrap's Reboot never overrides the site's own styles:
 
 1. `@layer vendor` holds Bootstrap 5.0.1 and Font Awesome 6.5.0, imported at the top of the file.
 2. Unlayered rules hold the fonts, the phone-input styles, brand variables (`--primary`, `--ink-strong`, …), body/heading fonts, the scrollbar and keyframes.
