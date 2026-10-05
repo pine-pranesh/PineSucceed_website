@@ -201,6 +201,7 @@
     "/ui-ux-design-services": "services/staff-augmentation/ui-ux-design-services.html",
     "/crm-consulting-services": "services/crm-erp/crm-consulting-services.html",
     "/microsoft-dynamics-365-erp-services": "services/crm-erp/microsoft-dynamics-365-erp-services.html",
+    "/salesforce-implementation": "services/crm-erp/salesforce-implementation-services.html",
     "/accelerate-software-delivery-with-AI-Assisted-engineering": "services/ai-data/ai-across-sdlc-services.html"
   };
 
@@ -253,7 +254,8 @@
     "startups-mvp": "/startups-and-mvp-development-services",
     "ui-ux-design": "/ui-ux-design-services",
     "crm-consulting": "/crm-consulting-services",
-    "dynamics-365-erp": "/microsoft-dynamics-365-erp-services"
+    "dynamics-365-erp": "/microsoft-dynamics-365-erp-services",
+    "salesforce-implementation": "/salesforce-implementation"
   };
 
   var pathname = PAGE_TO_ROUTE[document.body.getAttribute("data-page")] || "";
